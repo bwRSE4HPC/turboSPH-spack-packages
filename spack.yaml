@@ -1,0 +1,24 @@
+# This is a Spack Environment file.
+#
+# It describes a set of packages to be installed, along with
+# configuration settings.
+spack:
+  # add custom package repo with ANN and correct version of h5hut
+  repos:
+    turbosph: spack_repo/turbosph
+  definitions:
+  # Need to use GCC 13 to build hdf5 v1.10
+  - compilers: [gcc@13.4.0]
+  - packages:
+    - mpi
+    - cmake
+    - hdf5@1.10.5+cxx~mpi api=v110
+    - turbosph.h5hut@1.99.13~fortran~mpi
+    - turbosph.ann@1.1.2
+  specs:
+  - matrix:
+    - [$packages]
+    - [$%compilers]
+  view: true
+  concretizer:
+    unify: true
